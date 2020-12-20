@@ -1,6 +1,6 @@
 package com.sean.structuredstreaming
 
-import org.apache.spark.sql.streaming.StreamingQuery
+import org.apache.spark.sql.streaming.{StreamingQuery, Trigger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object WordCount1 {
@@ -23,6 +23,7 @@ object WordCount1 {
       .count()
     val query: StreamingQuery = wordCounts.writeStream
       .outputMode("complete")
+      .trigger(Trigger.ProcessingTime(0))
       .format("console")
       .start()
     query.awaitTermination()
