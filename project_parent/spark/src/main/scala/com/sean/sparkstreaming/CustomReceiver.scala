@@ -24,14 +24,13 @@ class CustomReceiver(host: String, port: Int) extends Receiver[String](StorageLe
 
   private def receive(): Unit = {
     var socket: Socket = null
-    var userInput: String = null
+    var reader: BufferedReader = null
+    var line: String = null
     try {
       socket = new Socket(host, port)
-      val reader: BufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream, StandardCharsets.UTF_8))
-      userInput = reader.readLine()
-      while (!isStopped && userInput != null) {
-        store(userInput)
-        userInput = reader.readLine()
+      reader = new BufferedReader(new InputStreamReader(socket.getInputStream, StandardCharsets.UTF_8))
+      while (!isStopped && (line = reader.readLine()) != null) {
+        store(line)
       }
       reader.close()
       socket.close()
@@ -47,13 +46,13 @@ class CustomReceiver(host: String, port: Int) extends Receiver[String](StorageLe
 
 object CustomReceiver {
   def main(args: Array[String]): Unit = {
-    val conf: SparkConf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")//.set("spark.driver.allowMultipleContexts","true")
+    val conf: SparkConf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount") //.set("spark.driver.allowMultipleContexts","true")
     //val sc: SparkContext = new SparkContext(conf)
     //sc.setLogLevel("ERROR")
     val ssc: StreamingContext = new StreamingContext(conf, Seconds(5))
     ssc.sparkContext.setLogLevel("ERROR")
 
-    val lines: ReceiverInputDStream[String] = ssc.receiverStream(new CustomReceiver("hadoop121",9999))
+    val lines: ReceiverInputDStream[String] = ssc.receiverStream(new CustomReceiver("hadoop121", 9999))
     val wordCounts: DStream[(String, Int)] = lines.flatMap(_.split(" "))
       .map((_, 1))
       .reduceByKey(_ + _)
