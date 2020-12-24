@@ -16,7 +16,7 @@ object ClassDemo06 {
     def schoolchild()
   }
 
-  class Player extends PlayLOL {
+  abstract class Player extends PlayLOL {
     override def top(): Unit = {}
 
     override def mid(): Unit = {}
@@ -30,7 +30,7 @@ object ClassDemo06 {
     override def schoolchild(): Unit = {}
   }
 
-  class GreenHand extends Player{
+  class GreenHand extends Player {
     override def support(): Unit = println("我是辅助，B键一扣，不死不回城!")
 
     override def schoolchild(): Unit = println("我是小学生，你骂我，我就挂机!")
