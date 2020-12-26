@@ -1,6 +1,6 @@
 package com.sean;
 
-public class ListNodeFunction2 {
+public class Test2 {
 
     /**
      * 反转以a为头节点的链表
