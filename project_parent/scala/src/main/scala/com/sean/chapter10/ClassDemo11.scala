@@ -1,4 +1,4 @@
-package com.sean.chapter9
+package com.sean.chapter10
 
 object ClassDemo11 {
   def main(args: Array[String]): Unit = {
