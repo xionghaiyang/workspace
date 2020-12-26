@@ -1,4 +1,4 @@
-package com.sean.chapter9
+package com.sean.chapter10
 
 import scala.collection.mutable.ArrayBuffer
 
