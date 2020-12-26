@@ -1,6 +1,6 @@
 package com.sean;
 
-public class ListNodeFunction {
+public class Test1 {
     /**
      * 递归反转整个列表
      *
